@@ -1,24 +1,30 @@
+import { ButtonSignIn } from '@App/components/elements/ButtonSignIn';
+import Box from '@mui/material/Box';
 import Head from 'next/head';
 import { useMoralis } from 'react-moralis';
 
 export default function Home(): JSX.Element {
-  const { authenticate, user, logout, isAuthenticated } = useMoralis();
+  const { user } = useMoralis();
 
   return (
     <>
       <Head>
         <title>Inicio</title>
       </Head>
-      <h1>{user?.get('username')}</h1>
-      {isAuthenticated ? (
-        <button type="button" onClick={() => logout()}>
-          logout
-        </button>
-      ) : (
-        <button type="button" onClick={() => authenticate()}>
-          login
-        </button>
-      )}
+
+      <Box
+        sx={{
+          alignItems: 'center',
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100vh',
+          justifyContent: 'center',
+          width: '100vw',
+        }}
+      >
+        <h1>{user?.get('username')}</h1>
+        <ButtonSignIn />
+      </Box>
     </>
   );
 }
