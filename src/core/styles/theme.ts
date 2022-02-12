@@ -1,27 +1,41 @@
-import { createTheme } from '@mui/material';
+import { createTheme } from '@nextui-org/react';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#7209b7',
-    },
-    secondary: {
-      main: '#4895ef',
-    },
-  },
-
-  components: {
-    MuiTooltip: {
-      styleOverrides: {
-        tooltip: {
-          background: '#FFFFFF',
-          backgroundColor: '#FFFFFF',
-          borderRadius: 16,
-          padding: 0,
-        },
-      },
-    },
+export const darkMode = createTheme({
+  type: 'dark',
+  theme: {
+    colors: {},
+    space: {},
+    fontSizes: {},
+    fonts: {},
+    fontWeights: {},
+    lineHeights: {},
+    letterSpacings: {},
+    sizes: {},
+    borderWidths: {},
+    borderStyles: {},
+    radii: {},
+    shadows: {},
+    zIndices: {},
+    transitions: {},
   },
 });
 
-export { theme };
+export const lightMode = createTheme({
+  type: 'light',
+  theme: {
+    colors: {},
+    space: {},
+    fontSizes: {},
+    fonts: {},
+    fontWeights: {},
+    lineHeights: {},
+    letterSpacings: {},
+    sizes: {},
+    borderWidths: {},
+    borderStyles: {},
+    radii: {},
+    shadows: {},
+    zIndices: {},
+    transitions: {},
+  },
+});

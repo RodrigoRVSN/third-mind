@@ -1,7 +1,7 @@
-import { ButtonSignIn } from '@App/components/elements/ButtonSignIn';
-import Box from '@mui/material/Box';
+import { Header } from '@App/components/layout/Header';
 import Head from 'next/head';
 import { useMoralis } from 'react-moralis';
+import { Avatar } from '@nextui-org/react';
 
 export default function Home(): JSX.Element {
   const { user } = useMoralis();
@@ -11,20 +11,15 @@ export default function Home(): JSX.Element {
       <Head>
         <title>Inicio</title>
       </Head>
-
-      <Box
-        sx={{
-          alignItems: 'center',
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100vh',
-          justifyContent: 'center',
-          width: '100vw',
-        }}
-      >
-        <h1>{user?.get('username')}</h1>
-        <ButtonSignIn />
-      </Box>
+      <Header />
+      <Avatar
+        size="xl"
+        color="gradient"
+        src="https://avatars.dicebear.com/api/pixel-art/rodrigo.svg"
+        bordered
+        css={{ size: '$20', margin: 'auto' }}
+      />
+      <h1>{user?.get('username')}</h1>
     </>
   );
 }

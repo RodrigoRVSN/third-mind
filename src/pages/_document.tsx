@@ -1,10 +1,24 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import Document, { Html, Head, Main, NextScript } from 'next/document';
-import createEmotionServer from '@emotion/server/create-instance';
-import { Children } from 'react';
-import createEmotionCache from '@App/core/styles/createEmotionCache';
+import { CssBaseline } from '@nextui-org/react';
+import Document, {
+  Html,
+  Head,
+  Main,
+  NextScript,
+  DocumentContext,
+  DocumentInitialProps,
+} from 'next/document';
 
 export default class MyDocument extends Document {
+  static async getInitialProps(
+    ctx: DocumentContext
+  ): Promise<DocumentInitialProps> {
+    const initialProps = await Document.getInitialProps(ctx);
+    return {
+      ...initialProps,
+      styles: <>{initialProps.styles}</>,
+    };
+  }
+
   render(): JSX.Element {
     return (
       <Html lang="en">
@@ -14,6 +28,7 @@ export default class MyDocument extends Document {
             rel="stylesheet"
           />
           <link rel="manifest" href="/manifest.json" />
+          {CssBaseline.flush()}
         </Head>
         <body>
           <Main />
@@ -23,30 +38,3 @@ export default class MyDocument extends Document {
     );
   }
 }
-MyDocument.getInitialProps = async ctx => {
-  const view = ctx.renderPage;
-  const cache = createEmotionCache();
-  const { extractCriticalToChunks } = createEmotionServer(cache);
-
-  ctx.renderPage = () =>
-    view({
-      enhanceApp: (App: any) => props =>
-        <App emotionCache={cache} {...props} />,
-    });
-
-  const initialProps = await Document.getInitialProps(ctx);
-  const emotionStyles = extractCriticalToChunks(initialProps.html);
-  const emotionStyleTags = emotionStyles.styles.map((style: any) => (
-    <style
-      data-emotion={`${style.key} ${style.ids.join(' ')}`}
-      key={style.key}
-      // eslint-disable-next-line react/no-danger
-      dangerouslySetInnerHTML={{ __html: style.css }}
-    />
-  ));
-
-  return {
-    ...initialProps,
-    styles: [...Children.toArray(initialProps.styles), ...emotionStyleTags],
-  };
-};
